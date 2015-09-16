@@ -12,14 +12,15 @@
     using Interfaces;
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.OAuth;
+    using System.Configuration;
 
     /// <summary>
     ///     Security functions
     /// </summary>
     public class SecurityHelper : ISecurityHelper
     {
-        private const int MinRandomNumber = 100000;
-        private const int MaxRandomNumber = 999999;
+        private readonly int MinRandomNumber = Convert.ToInt32(ConfigurationManager.AppSettings["SecurityTokenMinRandomNumber"]);
+        private readonly int MaxRandomNumber = Convert.ToInt32(ConfigurationManager.AppSettings["SecurityTokenMaxRandomNumber"]);
         private readonly IMappingEngine _mappingEngine;
         private readonly IUserRepository _userRepository;
 

@@ -8,7 +8,7 @@
         /// <summary>
         ///     One component instance per web request, or if HttpContext is not available, transient.
         /// </summary>
-        /// <typeparam name="S"></typeparam>
+        /// <typeparam name="S">Type of the object to be managed by this Lifetime</typeparam>
         /// <param name="group"></param>
         /// <returns></returns>
         public static ComponentRegistration<S> HybridPerWebRequestTransient<S>(this LifestyleGroup<S> @group)
