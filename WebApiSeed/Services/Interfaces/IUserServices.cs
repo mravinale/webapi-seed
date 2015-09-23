@@ -28,7 +28,7 @@
         /// </summary>
         /// <param name="userDto">User Dto</param>
         /// <returns>Updated User Dto</returns>
-        UpdateUserResultDto UpdateUser(UserDto userDto);
+        ServiceResult<UserDto, UserServiceResult> UpdateUser(UserDto userDto);
 
         /// <summary>
         ///     Delete a user from the database

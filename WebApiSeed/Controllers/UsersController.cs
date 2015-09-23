@@ -97,16 +97,16 @@
         public HttpResponseMessage Put(UserDto userDto)
         {
             var result = _userServices.UpdateUser(userDto);
-            switch (result.Result)
+            switch (result.Result.Enum)
             {
-                case UserUpdateResult.UsernameExists:
+                case UserServiceResultEnum.UsernameExists:
                     return Request.CreateResponse(HttpStatusCode.Conflict, new ErrorDto
                     {
                         Code = int.Parse(ControllerErrorCodes.UsernameExists),
                         Error = ControllersErrorMessages.UsernameExists
                     });
-                case UserUpdateResult.Success:
-                    return Request.CreateResponse(HttpStatusCode.OK, result.User);
+                case UserServiceResultEnum.Success:
+                    return Request.CreateResponse(HttpStatusCode.OK, result.Dto);
                 default:
                     return Request.CreateResponse(HttpStatusCode.BadRequest, userDto);
             }

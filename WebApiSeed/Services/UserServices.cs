@@ -75,7 +75,7 @@
         /// </summary>
         /// <param name="userDto"></param>
         /// <returns></returns>
-        public UpdateUserResultDto UpdateUser(UserDto userDto)
+        public ServiceResult<UserDto, UserServiceResult> UpdateUser(UserDto userDto)
         {
             var user = _mapperEngine.Map<UserDto, User>(userDto);
 
@@ -91,10 +91,10 @@
                 var usernameExists = _userRepository.FindUserByUserName(userDto.UserName);
                 if (usernameExists != null && usernameExists.Id != userDto.Id)
                 {
-                    return new UpdateUserResultDto
+                    return new ServiceResult<UserDto, UserServiceResult>
                     {
-                        Result = UserUpdateResult.UsernameExists,
-                        User = _mapperEngine.Map<User, UserDto>(existingUser)
+                        Result = new UserServiceResult { Enum = UserServiceResultEnum.UsernameExists },
+                        Dto = _mapperEngine.Map<User, UserDto>(existingUser)
                     };
                 }
 
@@ -108,10 +108,10 @@
 
             _userRepository.SaveOrUpdateUser(existingUser);
 
-            return new UpdateUserResultDto
+            return new ServiceResult<UserDto, UserServiceResult>
             {
-                Result = UserUpdateResult.Success,
-                User = _mapperEngine.Map<User, UserDto>(existingUser)
+                Result = new UserServiceResult { Enum = UserServiceResultEnum.Success },
+                Dto = _mapperEngine.Map<User, UserDto>(existingUser)
             };
         }
 

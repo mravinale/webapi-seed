@@ -3,7 +3,7 @@
     /// <summary>
     ///     Service result
     /// </summary>
-    public enum UserUpdateResult
+    public enum UserServiceResultEnum
     {
         /// <summary>
         ///     Success updating user

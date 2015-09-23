@@ -178,8 +178,8 @@
             var result = userServices.UpdateUser(userDto);
 
             Assert.IsNotNull(result);
-            Assert.IsNotNull(result.User);
-            Assert.AreEqual(userDto.UserName, result.User.UserName);
+            Assert.IsNotNull(result.Dto);
+            Assert.AreEqual(userDto.UserName, result.Dto.UserName);
         }
 
         [TestMethod]
@@ -207,8 +207,8 @@
             var result = userServices.UpdateUser(userDto);
 
             Assert.IsNotNull(result);
-            Assert.IsNotNull(result.User);
-            Assert.AreEqual(userDto.UserName, result.User.UserName);
+            Assert.IsNotNull(result.Dto);
+            Assert.AreEqual(userDto.UserName, result.Dto.UserName);
         }
 
         [TestMethod]
@@ -234,12 +234,12 @@
             UserRepositoryMock.Setup(repository => repository.SaveOrUpdateUser(It.IsAny<User>()));
 
             var userServices = new UserServices(UserRepositoryMock.Object, MappingEngine, null);
-            var result = userServices.UpdateUser(userDto);
+            var userServiceResult = userServices.UpdateUser(userDto);
 
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.User);
-            Assert.AreEqual(user.UserName, result.User.UserName);
-            Assert.AreEqual(UserUpdateResult.UsernameExists, result.Result);
+            Assert.IsNotNull(userServiceResult);
+            Assert.IsNotNull(userServiceResult.Dto);
+            Assert.AreEqual(user.UserName, userServiceResult.Dto.UserName);
+            Assert.AreEqual(UserServiceResultEnum.UsernameExists, userServiceResult.Result.Enum);
         }
     }
 }
