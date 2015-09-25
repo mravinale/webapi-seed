@@ -14,6 +14,7 @@
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.AutoMoq;
     using Services;
+    using Common.User;
 
     [TestClass]
     public class UserServicesTests : BaseServiceUnitTests

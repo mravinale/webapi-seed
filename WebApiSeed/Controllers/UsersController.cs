@@ -18,6 +18,7 @@
     using MoreLinq;
     using Resources;
     using Services.Interfaces;
+    using Common.User;
 
     /// <summary>
     ///     Users Controller

@@ -17,6 +17,8 @@
     using Infrastructure.Helpers.Interfaces;
     using Interfaces;
     using Resources;
+    using Common;
+    using Common.User;
 
     /// <summary>
     ///     User services

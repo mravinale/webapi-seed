@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WebApiSeed.Dtos
+namespace WebApiSeed.Common.User
 {
     public class UserServiceResult : IServiceResult
     {

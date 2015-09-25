@@ -4,6 +4,8 @@
     using System.Device.Location;
     using System.Net.Http;
     using Dtos;
+    using Common;
+    using Common.User;
 
     /// <summary>
     ///     User services interface

@@ -1,4 +1,4 @@
-﻿namespace WebApiSeed.Dtos
+﻿namespace WebApiSeed.Common.User
 {
     /// <summary>
     ///     Service result

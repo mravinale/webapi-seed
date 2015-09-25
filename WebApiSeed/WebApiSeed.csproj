@@ -172,11 +172,11 @@
     <Compile Include="Dtos\ApiTokenDto.cs" />
     <Compile Include="Dtos\BaseDto.cs" />
     <Compile Include="Dtos\ErrorDto.cs" />
-    <Compile Include="Dtos\IServiceResult.cs" />
-    <Compile Include="Dtos\ServiceResult.cs" />
+    <Compile Include="Common\IServiceResult.cs" />
+    <Compile Include="Common\ServiceResult.cs" />
     <Compile Include="Dtos\UserDto.cs" />
-    <Compile Include="Dtos\UserServiceResult.cs" />
-    <Compile Include="Dtos\UserServiceResultEnum.cs" />
+    <Compile Include="Common\User\UserServiceResult.cs" />
+    <Compile Include="Common\User\UserServiceResultEnum.cs" />
     <Compile Include="Infrastructure\Attributes\UnhandledExceptionAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\VerifyTokenAttribute.cs" />
     <Compile Include="Infrastructure\Automapper\AutomapperConfiguration.cs" />
