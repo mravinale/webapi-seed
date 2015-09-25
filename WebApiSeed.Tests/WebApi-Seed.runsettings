@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="Code Coverage" uri="datacollector://Microsoft/CodeCoverage/2.0" assemblyQualifiedName="Microsoft.VisualStudio.Coverage.DynamicCoverageDataCollector, Microsoft.VisualStudio.TraceCollector, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+        <Configuration>
+          <CodeCoverage>
+            <ModulePaths>
+			        <Include>
+			           <ModulePath>^.*winkapi\.dll</ModulePath>
+			           <ModulePath>^.*winkapi\.common\.dll</ModulePath>
+			           <ModulePath>^.*winkapi\.data\.dll</ModulePath>
+			        </Include>
+            </ModulePaths>
+			      <Sources>
+				      <Exclude>
+					      <Source>.*\\Migrations\\.*</Source>
+				      </Exclude>
+            </Sources>
+            <Functions>
+              <Exclude>
+                <Function>WinkApi\.Data\.Configuration\.Ioc.*</Function>
+                <Function>WinkApi\.Common\.CustomLifestyles.*</Function>
+                <Function>WinkApi\.Common\.Configuration\.Ioc.*</Function>
+                <Function>WinkApi\.Common\.Helpers\.LoggingHelper.*</Function>
+                <Function>WinkApi\.Common\.Services\.AzureBlobServices.*</Function>
+                <Function>WinkApi\.Common\.Utils\.RetryExecuter.*</Function>
+                <Function>WinkApi\.Data\.Configuration\.EF.*</Function>
+                <Function>WinkApi\.Data\.Domain\.Mappings.*</Function>
+                <Function>WinkApi\.Bootstrapper.*</Function>
+                <Function>WinkApi\.Startup.*</Function>
+                <Function>WinkApi\.WebApiConfig.*</Function>
+                <Function>WinkApi\.Dtos.*</Function>
+                <Function>WinkApi\.Infrastructure\.Automapper.*</Function>
+                <Function>WinkApi\.Infrastructure\.Ioc.*</Function>
+                <Function>WinkApi\.Infrastructure\.Mappings.*</Function>
+                <Function>WinkApi\.Resources.*</Function>
+                <Function>WinkApi\.Services\.GcmPushServices.*</Function>
+                <Function>WinkApi\.Infrastructure\.Helpers\.SecurityHelper.*</Function>
+              </Exclude>
+            </Functions>
+          </CodeCoverage>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>
