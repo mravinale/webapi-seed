@@ -7,9 +7,9 @@
           <CodeCoverage>
             <ModulePaths>
 			        <Include>
-			           <ModulePath>^.*winkapi\.dll</ModulePath>
-			           <ModulePath>^.*winkapi\.common\.dll</ModulePath>
-			           <ModulePath>^.*winkapi\.data\.dll</ModulePath>
+			           <ModulePath>^.*webapiseed\.dll</ModulePath>
+			           <ModulePath>^.*webapiseed\.common\.dll</ModulePath>
+			           <ModulePath>^.*webapiseed\.data\.dll</ModulePath>
 			        </Include>
             </ModulePaths>
 			      <Sources>
@@ -19,24 +19,24 @@
             </Sources>
             <Functions>
               <Exclude>
-                <Function>WinkApi\.Data\.Configuration\.Ioc.*</Function>
-                <Function>WinkApi\.Common\.CustomLifestyles.*</Function>
-                <Function>WinkApi\.Common\.Configuration\.Ioc.*</Function>
-                <Function>WinkApi\.Common\.Helpers\.LoggingHelper.*</Function>
-                <Function>WinkApi\.Common\.Services\.AzureBlobServices.*</Function>
-                <Function>WinkApi\.Common\.Utils\.RetryExecuter.*</Function>
-                <Function>WinkApi\.Data\.Configuration\.EF.*</Function>
-                <Function>WinkApi\.Data\.Domain\.Mappings.*</Function>
-                <Function>WinkApi\.Bootstrapper.*</Function>
-                <Function>WinkApi\.Startup.*</Function>
-                <Function>WinkApi\.WebApiConfig.*</Function>
-                <Function>WinkApi\.Dtos.*</Function>
-                <Function>WinkApi\.Infrastructure\.Automapper.*</Function>
-                <Function>WinkApi\.Infrastructure\.Ioc.*</Function>
-                <Function>WinkApi\.Infrastructure\.Mappings.*</Function>
-                <Function>WinkApi\.Resources.*</Function>
-                <Function>WinkApi\.Services\.GcmPushServices.*</Function>
-                <Function>WinkApi\.Infrastructure\.Helpers\.SecurityHelper.*</Function>
+                <Function>WebApiSeed\.Data\.Configuration\.Ioc.*</Function>
+                <Function>WebApiSeed\.Common\.CustomLifestyles.*</Function>
+                <Function>WebApiSeed\.Common\.Configuration\.Ioc.*</Function>
+                <Function>WebApiSeed\.Common\.Helpers\.LoggingHelper.*</Function>
+                <Function>WebApiSeed\.Common\.Services\.AzureBlobServices.*</Function>
+                <Function>WebApiSeed\.Common\.Utils\.RetryExecuter.*</Function>
+                <Function>WebApiSeed\.Data\.Configuration\.EF.*</Function>
+                <Function>WebApiSeed\.Data\.Domain\.Mappings.*</Function>
+                <Function>WebApiSeed\.Bootstrapper.*</Function>
+                <Function>WebApiSeed\.Startup.*</Function>
+                <Function>WebApiSeed\.WebApiConfig.*</Function>
+                <Function>WebApiSeed\.Dtos.*</Function>
+                <Function>WebApiSeed\.Infrastructure\.Automapper.*</Function>
+                <Function>WebApiSeed\.Infrastructure\.Ioc.*</Function>
+                <Function>WebApiSeed\.Infrastructure\.Mappings.*</Function>
+                <Function>WebApiSeed\.Resources.*</Function>
+                <Function>WebApiSeed\.Services\.GcmPushServices.*</Function>
+                <Function>WebApiSeed\.Infrastructure\.Helpers\.SecurityHelper.*</Function>
               </Exclude>
             </Functions>
           </CodeCoverage>
