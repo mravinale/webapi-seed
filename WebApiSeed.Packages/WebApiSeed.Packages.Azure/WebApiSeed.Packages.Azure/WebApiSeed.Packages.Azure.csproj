@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\Dtos\AzureFileDetailsDto.cs.pp" />
+    <None Include="Content\Resources\ExceptionErrorMessages.Designer.cs.pp" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Content\Services\AzureBlobServices.cs.pp" />
     <None Include="Content\Services\AzurePicturesServices.cs.pp" />
@@ -84,6 +85,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Content\Resources\ExceptionErrorMessages.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
