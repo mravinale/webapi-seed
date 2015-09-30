@@ -1,22 +1,23 @@
 <?xml version="1.0"?>
 <package >
-  <metadata>
-    <id>WebApiSeed.Packages.Azure</id>
-	<version>1.0.0.0</version>
-	<title>WebApiSeed.Packages.Azure</title>
-	<authors>Martin Keimel</authors>
-	<owners>Making Sense</owners>
-	<requireLicenseAcceptance>false</requireLicenseAcceptance>
-	<description>Utilities for adding Azure Storage capabilities to a WebApiSeed.Common based project</description>
-	<copyright>Copyright 2015</copyright>
-	<tags>WebApiSeed Azure</tags>
-	<dependencies>
-		<dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" />
-		<dependency id="Microsoft.WindowsAzure.ConfigurationManager" version="3.1.0" />
-		<dependency id="WindowsAzure.Storage" version="5.0.2" />
-	</dependencies>
-  </metadata>
-  <files>
-    <file src="Content\**\*.*" target="content" />
-  </files>
+    <metadata>
+        <id>WebApiSeed.Packages.Azure</id>
+        <version>1.0.0.0</version>
+        <title>WebApiSeed.Packages.Azure</title>
+        <authors>Martin Keimel</authors>
+        <owners>Making Sense</owners>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Utilities for adding Azure Storage capabilities to a WebApiSeed.Common based project</description>
+        <copyright>Copyright 2015</copyright>
+        <tags>WebApiSeed Azure</tags>
+        <dependencies>
+            <dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" />
+            <dependency id="Microsoft.WindowsAzure.ConfigurationManager" version="3.1.0" />
+            <dependency id="WindowsAzure.Storage" version="5.0.2" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="Content\**\*.*" target="content" />
+        <file src="Tools\**\*.*" target="tools" />
+    </files>
 </package>

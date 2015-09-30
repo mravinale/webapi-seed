@@ -82,6 +82,8 @@
     <None Include="Content\Services\AzurePicturesServices.cs.pp" />
     <None Include="Content\Services\Interfaces\IAzureBlobServices.cs.pp" />
     <None Include="Content\Services\Interfaces\IAzurePicturesServices.cs.pp" />
+    <None Include="Tools\AddKeyToConfig.ps1" />
+    <None Include="Tools\install.ps1" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
