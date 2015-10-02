@@ -118,6 +118,36 @@
         }
 
         /// <summary>
+        ///     Creates a new user
+        /// </summary>
+        /// <param name="userDto"></param>
+        /// <returns></returns>
+        public ServiceResult<UserDto, UserServiceResult> CreateUser(UserDto userDto)
+        {
+            if (userDto.UserName != null)
+            {
+                var usernameExists = _userRepository.FindUserByUserName(userDto.UserName);
+                if (usernameExists != null && usernameExists.Id != userDto.Id)
+                {
+                    return new ServiceResult<UserDto, UserServiceResult>
+                    {
+                        Result = new UserServiceResult { Enum = UserServiceResultEnum.UsernameExists }
+                    };
+                }
+            }
+
+            var newUser = _mapperEngine.Map<UserDto, User>(userDto);
+
+            _userRepository.SaveOrUpdateUser(newUser);
+
+            return new ServiceResult<UserDto, UserServiceResult>
+            {
+                Result = new UserServiceResult { Enum = UserServiceResultEnum.Success },
+                Dto = _mapperEngine.Map<User, UserDto>(newUser)
+            };
+        }
+
+        /// <summary>
         ///     Delete a user
         /// </summary>
         /// <param name="id"></param>

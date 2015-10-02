@@ -113,6 +113,28 @@
             }
         }
 
+        [Route("")]
+        [ResponseType(typeof(UserDto))]
+        [HttpPost]
+        [AllowAnonymous]
+        public HttpResponseMessage Post(UserDto userDto)
+        {
+            var result = _userServices.CreateUser(userDto);
+            switch (result.Result.Enum)
+            {
+                case UserServiceResultEnum.UsernameExists:
+                    return Request.CreateResponse(HttpStatusCode.Conflict, new ErrorDto
+                    {
+                        Code = int.Parse(ControllerErrorCodes.UsernameExists),
+                        Error = ControllersErrorMessages.UsernameExists
+                    });
+                case UserServiceResultEnum.Success:
+                    return Request.CreateResponse(HttpStatusCode.OK, result.Dto);
+                default:
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, userDto);
+            }
+        }
+
         /// <summary>
         ///     Delete a user from the database
         /// </summary>

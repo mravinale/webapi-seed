@@ -26,7 +26,7 @@
         UserDto GetUserById(int userId);
 
         /// <summary>
-        ///     Save or update user information
+        ///     Update user information
         /// </summary>
         /// <param name="userDto">User Dto</param>
         /// <returns>Updated User Dto</returns>
@@ -44,5 +44,12 @@
         /// <param name="userId">ID of the user</param>
         /// <returns>Update user object</returns>
         UserDto LogoutUser(int userId);
+
+        /// <summary>
+        ///     Create user information
+        /// </summary>
+        /// <param name="userDto">User Dto</param>
+        /// <returns>New User Dto</returns>
+        ServiceResult<UserDto, UserServiceResult> CreateUser(UserDto userDto);
     }
 }
