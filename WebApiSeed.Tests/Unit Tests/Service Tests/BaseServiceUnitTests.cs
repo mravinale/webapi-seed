@@ -18,7 +18,7 @@
         protected Mock<IRetryExecuter> RetryExecuterMock { get; set; }
         protected Mock<ISecurityHelper> SecurityHelperMock { get; set; }
 
-        protected IMappingEngine MappingEngine { get; set; }
+        protected IMapper MappingEngine { get; set; }
 
         [TestInitialize]
         public virtual void TestInitialize()
@@ -27,7 +27,7 @@
             RetryExecuterMock = new Mock<IRetryExecuter>();
             UserRepositoryMock = new Mock<IUserRepository>();
             SecurityHelperMock = new Mock<ISecurityHelper>();
-            MappingEngine = _container.Resolve<IMappingEngine>();
+            MappingEngine = _container.Resolve<IMapper>();
         }
     }
 }
