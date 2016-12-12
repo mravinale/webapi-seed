@@ -9,7 +9,7 @@
     ///     Entity Resolver
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class EntityResolver<T> : ValueResolver<int, T> where T : BaseEntity
+    public class EntityResolver<T> : IValueResolver<int, T, T> where T : BaseEntity
     {
         private readonly IDbContext _dbContext;
 
@@ -25,7 +25,7 @@
         /// <summary>
         ///     Resolve core
         /// </summary>
-        protected override T ResolveCore(int source)
+        public T Resolve(int source, T destination, T destMember, ResolutionContext context)
         {
             return _dbContext.Entity<T>().FirstOrDefault(x => x.Id == source);
         }

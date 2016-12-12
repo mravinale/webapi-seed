@@ -27,7 +27,7 @@
     {
         #region Constructor
 
-        private readonly IMappingEngine _mapperEngine;
+        private readonly IMapper _mapperEngine;
         private readonly ISecurityHelper _securityHelper;
         private readonly IUserRepository _userRepository;
 
@@ -37,7 +37,7 @@
         /// <param name="userRepository">User repository</param>
         /// <param name="mapperEngine">Mapper engine</param>
         /// <param name="securityHelper">Security helper</param>
-        public UserServices(IUserRepository userRepository, IMappingEngine mapperEngine,
+        public UserServices(IUserRepository userRepository, IMapper mapperEngine,
             ISecurityHelper securityHelper)
         {
             _userRepository = userRepository;

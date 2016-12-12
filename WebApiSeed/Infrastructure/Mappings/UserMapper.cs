@@ -11,16 +11,15 @@
     /// <summary>
     ///     User mappers
     /// </summary>
-    public class UserMapper : IObjectMapper
+    public class UserMapper : Profile
     {
         /// <summary>
         ///     Apply mappings
         /// </summary>
-        public void Apply()
+        public UserMapper()
         {
-            Mapper.CreateMap<User, UserDto>();
-
-            Mapper.CreateMap<UserDto, User>();
+            CreateMap<User, UserDto>();
+            CreateMap<UserDto, User>();
         }
     }
 }

@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Reflection;
     using AutoMapper;
+    using Mappings;
 
     /// <summary>
     ///     Automapper configuration
@@ -17,7 +18,11 @@
         public static void Configure(Func<Type, object> serviceLocator = null)
         {
             if (serviceLocator != null)
-                Mapper.Configuration.ConstructServicesUsing(serviceLocator);
+            {
+                Mapper.Initialize(x => x.ConstructServicesUsing(serviceLocator));
+            }
+
+            Mapper.Initialize(c => c.AddProfile<UserMapper>());
 
             var configurators = Assembly.GetExecutingAssembly().GetTypes()
                 .Where(t => typeof (IObjectMapper).IsAssignableFrom(t)

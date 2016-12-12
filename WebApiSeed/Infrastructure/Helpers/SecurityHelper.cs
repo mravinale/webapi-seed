@@ -21,7 +21,7 @@
     {
         private readonly int MinRandomNumber = Convert.ToInt32(ConfigurationManager.AppSettings["SecurityTokenMinRandomNumber"]);
         private readonly int MaxRandomNumber = Convert.ToInt32(ConfigurationManager.AppSettings["SecurityTokenMaxRandomNumber"]);
-        private readonly IMappingEngine _mappingEngine;
+        private readonly IMapper _mappingEngine;
         private readonly IUserRepository _userRepository;
 
         /// <summary>
@@ -29,7 +29,7 @@
         /// </summary>
         /// <param name="mappingEngine">Automapper engine</param>
         /// <param name="userRepository">User repository</param>
-        public SecurityHelper(IMappingEngine mappingEngine, IUserRepository userRepository)
+        public SecurityHelper(IMapper mappingEngine, IUserRepository userRepository)
         {
             _mappingEngine = mappingEngine;
             _userRepository = userRepository;
