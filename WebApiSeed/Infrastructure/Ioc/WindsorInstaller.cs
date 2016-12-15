@@ -22,8 +22,8 @@
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(
-                Component.For<IMappingEngine>()
-                    .UsingFactoryMethod(() => Mapper.Engine),
+                Component.For<IMapper>()
+                    .UsingFactoryMethod(() => Mapper.Instance),
                 Types.FromThisAssembly()
                     .Where(type => (type.Name.EndsWith("Services") ||
                                     type.Name.EndsWith("Resolver") ||

@@ -12,7 +12,7 @@
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="U"></typeparam>
-    public class ManyToManyEntityResolver<T, U> : ValueResolver<IEnumerable<T>, IEnumerable<U>>
+    public class ManyToManyEntityResolver<T, U> : IValueResolver<IEnumerable<T>, IEnumerable<U>, IEnumerable<U>>
         where T : BaseDto //Dto
         where U : BaseEntity //EF entities
     {
@@ -30,7 +30,7 @@
         /// <summary>
         ///     Resolve core method
         /// </summary>
-        protected override IEnumerable<U> ResolveCore(IEnumerable<T> source)
+        public IEnumerable<U> Resolve(IEnumerable<T> source, IEnumerable<U> destination, IEnumerable<U> destMember, ResolutionContext context)
         {
             return source.Select(item => _dbContext.Entity<U>().FirstOrDefault(x => x.Id == item.Id));
         }

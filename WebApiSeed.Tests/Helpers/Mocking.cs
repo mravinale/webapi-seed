@@ -9,9 +9,9 @@
 
     internal class Mocking
     {
-        public static Mock<IMappingEngine> MockMapper<T, U>(U result)
+        public static Mock<IMapper> MockMapper<T, U>(U result)
         {
-            var mapperMock = new Mock<IMappingEngine>();
+            var mapperMock = new Mock<IMapper>();
             mapperMock.Setup(x => x.Map<T, U>(It.IsAny<T>())).Returns(result);
             return mapperMock;
         }
