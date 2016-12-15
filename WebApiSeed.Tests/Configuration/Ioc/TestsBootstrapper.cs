@@ -22,9 +22,9 @@
             // Autofac container
             var builder = new ContainerBuilder();
 
-            builder = Infrastructure.Ioc.AutofacRegister.Register(builder);
-            builder = RegisterCommon.Register(builder);
-            builder = DataInstaller.Register(builder);
+            Infrastructure.Ioc.AutofacRegister.Register(ref builder);
+            RegisterCommon.Register(ref builder);
+            DataInstaller.Register(ref builder);
 
             return builder.Build();
         }

@@ -14,12 +14,10 @@
         /// <summary>
         ///     Windsor installer install method
         /// </summary>
-        public static ContainerBuilder Register(ContainerBuilder builder)
+        public static void Register(ref ContainerBuilder builder)
         {
             builder.RegisterType<WebApiSeedDbInitializer>().As<IDatabaseInitializer<WebApiSeedDbContext>>().AsImplementedInterfaces()
                    .InstancePerRequest();
-
-            return builder;
         }
     }
 }

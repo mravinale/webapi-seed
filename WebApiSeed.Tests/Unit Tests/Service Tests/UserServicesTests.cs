@@ -1,26 +1,23 @@
 ﻿namespace WebApiSeed.Tests
 {
-    using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Device.Location;
     using System.Linq;
-    using System.Net.Http;
-    using System.Runtime.Remoting;
+
     using Data.Domain;
+
     using Dtos;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     using Moq;
-    using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.AutoMoq;
+
     using Services;
+
     using Common.User;
 
     [TestClass]
     public class UserServicesTests : BaseServiceUnitTests
     {
-        
-
         [TestMethod]
         [TestCategory("UnitTests")]
         public void DeleteUserTest()
