@@ -1,12 +1,9 @@
 ﻿namespace WebApiSeed.Infrastructure.Mappings
 {
-    using System;
-    using System.Configuration;
     using AutoMapper;
-    using Common.Extensions;
+
     using Data.Domain;
     using Dtos;
-    using IObjectMapper = Automapper.IObjectMapper;
 
     /// <summary>
     ///     User mappers

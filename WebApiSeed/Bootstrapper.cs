@@ -1,8 +1,19 @@
 ﻿namespace WebApiSeed
 {
-    using Castle.Windsor;
+    using Autofac;
+    using Autofac.Integration.WebApi;
+
+    using AutoMapper;
+
+    using Common.Configuration.Ioc;
+
+    using Data.Configuration.EF;
     using Data.Configuration.Ioc;
     using Infrastructure.Ioc;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Reflection;
+    using System.Web.Http;
 
     /// <summary>
     ///     Bootstrapper class
@@ -13,21 +24,16 @@
         ///     Initialize IOC container
         /// </summary>
         /// <returns></returns>
-        public static IWindsorContainer InitializeContainer()
+        public static IContainer InitializeContainer()
         {
-            return new WindsorContainer().Install(
-                new WindsorInstaller(),
-                new DataInstaller(),
-                new Common.Configuration.Ioc.WindsorInstaller());
-        }
+            // Autofac container
+            var builder = new ContainerBuilder();
 
-        /// <summary>
-        ///     Release container
-        /// </summary>
-        /// <param name="container"></param>
-        public static void Release(IWindsorContainer container)
-        {
-            container.Dispose();
+            AutofacRegister.Register(ref builder);
+            RegisterCommon.Register(ref builder);
+            DataInstaller.Register(ref builder);
+
+            return builder.Build();
         }
     }
 }

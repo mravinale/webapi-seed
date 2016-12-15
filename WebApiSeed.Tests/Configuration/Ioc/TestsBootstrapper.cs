@@ -1,29 +1,32 @@
 ﻿namespace WebApiSeed.Tests.Configuration.Ioc
 {
-    using Castle.Windsor;
+    using Autofac;
+
+    using Common.Configuration.Ioc;
+
     using Data.Configuration.Ioc;
 
+    using Infrastructure.Ioc;
+
+    /// <summary>
+    /// TestsBootstrapper Class
+    /// </summary>
     public static class TestsBootstrapper
     {
         /// <summary>
         ///     Initialize IOC container
         /// </summary>
         /// <returns></returns>
-        public static IWindsorContainer InitializeContainer()
+        public static IContainer InitializeContainer()
         {
-            return new WindsorContainer().Install(
-                new WindsorInstaller(),
-                new DataInstaller(),
-                new Common.Configuration.Ioc.WindsorInstaller());
-        }
+            // Autofac container
+            var builder = new ContainerBuilder();
 
-        /// <summary>
-        ///     Release container
-        /// </summary>
-        /// <param name="container"></param>
-        public static void Release(IWindsorContainer container)
-        {
-            container.Dispose();
+            builder = Infrastructure.Ioc.AutofacRegister.Register(builder);
+            builder = RegisterCommon.Register(builder);
+            builder = DataInstaller.Register(builder);
+
+            return builder.Build();
         }
     }
 }

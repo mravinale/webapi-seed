@@ -1,29 +1,35 @@
 ﻿namespace WebApiSeed.Data.Configuration.Ioc
 {
     using System.Configuration;
-    using Castle.MicroKernel.Registration;
-    using Castle.MicroKernel.SubSystems.Configuration;
-    using Castle.Windsor;
-    using Common.CustomLifestyles;
+
     using EF;
     using EF.Interfaces;
 
-    public class DataInstaller : IWindsorInstaller
+    using Autofac;
+
+    using System.Reflection;
+
+    /// <summary>
+    /// DataInstaller Clas
+    /// </summary>
+    public static class DataInstaller
     {
-        public void Install(IWindsorContainer container, IConfigurationStore store)
+        /// <summary>
+        /// Registers the specified builder.
+        /// </summary>
+        /// <param name="builder">The builder.</param>
+        /// <returns></returns>
+        public static void Register(ref ContainerBuilder builder)
         {
             var connectionString = ConfigurationManager.ConnectionStrings["WebApiSeedDb"].ConnectionString;
-            container.Register(
-                Component.For<IDbContext>()
-                    .ImplementedBy<WebApiSeedDbContext>()
-                    .LifeStyle.HybridPerWebRequestTransient()
-                    .DependsOn(Parameter.ForKey("connectionString").Eq(connectionString)),
-                Classes.FromThisAssembly()
+
+            builder.RegisterType<WebApiSeedDbContext>().As<IDbContext>().WithParameter("connectionString", connectionString).InstancePerLifetimeScope();
+
+            builder.RegisterAssemblyTypes(
+                Assembly.GetExecutingAssembly())
                     .Where(type => type.Name.EndsWith("Repository") || type.Name.EndsWith("Service") || type.Name.EndsWith("Helper"))
-                    .WithService.DefaultInterfaces()
-                    .LifestyleTransient()
-                    .Configure(x => x.Named(x.Implementation.FullName))
-                );
+                    .AsImplementedInterfaces()
+                    .InstancePerRequest();
         }
     }
 }

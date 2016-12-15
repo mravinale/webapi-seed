@@ -9,7 +9,7 @@ namespace WebApiSeed.Infrastructure.Attributes
     using Data.Repositories.Interfaces;
     using Dtos;
     using Helpers.Interfaces;
-    using Ioc;
+    using Autofac;
     using Resources;
 
     /// <summary>
@@ -19,13 +19,13 @@ namespace WebApiSeed.Infrastructure.Attributes
     {
         public override void OnActionExecuting(HttpActionContext filterContext)
         {
-            var container =
-                ((WindsorDependencyResolver) (filterContext.RequestContext.Configuration.DependencyResolver)).Container;
+            var container = new ContainerBuilder().Build();
             var userRepository = container.Resolve<IUserRepository>();
             var securityHelper = container.Resolve<ISecurityHelper>();
             var token = filterContext.Request.Headers.Authorization.Parameter;
             var userId = securityHelper.GetUserIdForToken(token);
             var user = userRepository.FindUserById(userId);
+
             if (user.AccessToken != token)
             {
                 Trace.TraceError("[VerifyTokenAttribute] Invalid Access Token: " + token);

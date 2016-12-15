@@ -1,23 +1,21 @@
 ﻿namespace WebApiSeed.Tests
 {
-    using System.Linq;
-    using System.Net;
-    using System.Net.Http;
-    using System.Text;
-    using Castle.Windsor;
     using Configuration.Ioc;
+
     using Data.Configuration.EF;
     using Data.Configuration.EF.Interfaces;
-    using Data.Domain;
-    using Dtos;
+
     using Microsoft.Owin.Testing;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
 
+    using Autofac;
+
+    /// <summary>
+    /// BaseIntegrationTests Class
+    /// </summary>
     public class BaseIntegrationTests
     {
-        protected IWindsorContainer Container; // IOC to obtain the db context
+        protected IContainer Container; // IOC to obtain the db context
         protected WebApiSeedDbContext DbContext; // Db context to access the database directly
         protected TestServer Server; // API Server
 

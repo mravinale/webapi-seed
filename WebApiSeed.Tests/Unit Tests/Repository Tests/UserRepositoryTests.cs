@@ -168,7 +168,9 @@
             UserSet.Setup(set => set.Expression).Returns(data.Expression);
             UserSet.Setup(set => set.ElementType).Returns(data.ElementType);
             UserSet.Setup(set => set.GetEnumerator()).Returns(data.GetEnumerator());
+
             ContextMock.Setup(c => c.Entity<User>()).Returns(UserSet.Object);
+
             var repository = new UserRepository(ContextMock.Object, LoggingHelperMock.Object);
 
             var userId = 1;

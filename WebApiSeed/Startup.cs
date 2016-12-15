@@ -1,27 +1,34 @@
 ﻿using Microsoft.Owin;
 using WebApiSeed;
 
-[assembly: OwinStartup(typeof (Startup))]
-
+[assembly: OwinStartup(typeof(Startup))]
 namespace WebApiSeed
 {
     using System;
     using System.Data.Entity;
     using System.Web.Http;
-    using Castle.Windsor;
+
     using Data.Configuration.EF;
-    using Infrastructure.Ioc;
+
     using Microsoft.Owin.Cors;
     using Microsoft.Owin.Security.OAuth;
+
     using Owin;
-    using Swashbuckle.Application;
+
+    using Autofac;
+    using Autofac.Integration.WebApi;
+
+    using Infrastructure.Automapper;
 
     /// <summary>
     ///     Startup class
     /// </summary>
     public class Startup
     {
-        private static IWindsorContainer _container;
+        /// <summary>
+        /// The container
+        /// </summary>
+        private static IContainer _container;
 
         /// <summary>
         ///     OAuth Options
@@ -31,7 +38,7 @@ namespace WebApiSeed
         /// <summary>
         ///     Windsor container
         /// </summary>
-        public IWindsorContainer Container
+        public IContainer Container
         {
             get { return _container; }
         }
@@ -42,29 +49,25 @@ namespace WebApiSeed
         /// <param name="app"></param>
         public void Configuration(IAppBuilder app)
         {
-            _container = Bootstrapper.InitializeContainer();
-
-            var config = new HttpConfiguration
-            {
-                DependencyResolver = new WindsorDependencyResolver(_container)
-            };
-
-            ConfigureOAuth(app);
+            var config = new HttpConfiguration();
 
             WebApiConfig.Register(config);
 
-#if (DEBUG)
-            {
-                config.EnableSwagger(c =>
-                {
-                    c.IncludeXmlComments(String.Format(@"{0}\bin\WebApiSeed.XML", AppDomain.CurrentDomain.BaseDirectory));
-                    c.SingleApiVersion("v1", "Web Api Seed");
-                }).EnableSwaggerUi();
-            }
-#endif
+            _container = Bootstrapper.InitializeContainer();
+
+            AutomapperConfiguration.Configure(_container.Resolve);
+
+            config.DependencyResolver = new AutofacWebApiDependencyResolver(_container);
 
             app.UseCors(CorsOptions.AllowAll);
+
+            // Register the Autofac middleware FIRST, then the Autofac Web API middleware,
+            // and finally the standard Web API middleware.
+            app.UseAutofacMiddleware(_container);
+            app.UseAutofacWebApi(config);
             app.UseWebApi(config);
+
+            ConfigureOAuth(app);
 
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<WebApiSeedDbContext>());
         }
