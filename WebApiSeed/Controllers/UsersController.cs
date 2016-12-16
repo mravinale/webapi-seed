@@ -1,23 +1,20 @@
 ﻿namespace WebApiSeed.Controllers
 {
-    using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Diagnostics;
-    using System.IO;
-    using System.Linq;
     using System.Net;
     using System.Net.Http;
-    using System.Threading.Tasks;
     using System.Web.Http;
     using System.Web.Http.Description;
-    using Common.Helpers.Interfaces;
+
     using Dtos;
-    using Infrastructure.Attributes;
+
     using Infrastructure.Helpers.Interfaces;
-    using MoreLinq;
+
     using Resources;
+
     using Services.Interfaces;
+
     using Common.User;
 
     /// <summary>

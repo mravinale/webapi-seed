@@ -1,24 +1,22 @@
 ﻿namespace WebApiSeed.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Configuration;
-    using System.Device.Location;
-    using System.Diagnostics;
     using System.Linq;
-    using System.Net.Http;
+    using System.Collections.Generic;
+
     using AutoMapper;
-    using Common.Extensions;
-    using Common.Helpers.Interfaces;
+
     using Data.Domain;
-    using Data.Repositories.Interfaces;
+
     using Dtos;
+
     using Infrastructure.Helpers.Interfaces;
+
     using Interfaces;
-    using Resources;
+
     using Common;
     using Common.User;
+
+    using Data.Configuration.EF.Interfaces;
 
     /// <summary>
     ///     User services
@@ -29,18 +27,17 @@
 
         private readonly IMapper _mapperEngine;
         private readonly ISecurityHelper _securityHelper;
-        private readonly IUserRepository _userRepository;
+        private readonly IDbContext _dbContext;
 
         /// <summary>
         ///     Constructor
         /// </summary>
-        /// <param name="userRepository">User repository</param>
+        /// <param name="dbContext">dbContext</param>
         /// <param name="mapperEngine">Mapper engine</param>
         /// <param name="securityHelper">Security helper</param>
-        public UserServices(IUserRepository userRepository, IMapper mapperEngine,
-            ISecurityHelper securityHelper)
+        public UserServices(IDbContext dbContext, IMapper mapperEngine, ISecurityHelper securityHelper)
         {
-            _userRepository = userRepository;
+            _dbContext = dbContext;
             _mapperEngine = mapperEngine;
             _securityHelper = securityHelper;
         }
@@ -49,14 +46,30 @@
 
         #region CRUD
 
+        public User FindUserById(int id)
+        {
+            return _dbContext.Entity<User>().FirstOrDefault(u => u.Id == id);
+        }
+
+        public User FindUserByUserName(string userName)
+        {
+            return _dbContext.Entity<User>().FirstOrDefault(user => user.UserName != null && user.UserName.ToUpper() == userName.ToUpper());
+        }
+
+        public IList<User> GetAllUsers()
+        {
+            return _dbContext.Entity<User>().ToList();
+        }
+
         /// <summary>
         ///     Retrieve all users in the database
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<UserDto> GetAllUsers()
+        public IEnumerable<UserDto> GetAllUsersDto()
         {
-            var users = _userRepository.GetAllUsers();
+            var users = GetAllUsers();
             var userDtos = _mapperEngine.Map<IList<User>, IList<UserDto>>(users);
+
             return userDtos;
         }
 
@@ -67,7 +80,8 @@
         /// <returns>UserDto</returns>
         public UserDto GetUserById(int userId)
         {
-            var user = _userRepository.FindUserById(userId);
+            var user = FindUserById(userId);
+
             return user != null ? _mapperEngine.Map<User, UserDto>(user) : null;
         }
 
@@ -82,15 +96,19 @@
             var user = _mapperEngine.Map<UserDto, User>(userDto);
 
             //Don't allow user creation here
-            var existingUser = _userRepository.FindUserById(userDto.Id);
+            var existingUser = FindUserById(userDto.Id);
+
             if (existingUser == null)
+            {
                 return null;
+            }
 
             #region Update only those fields that are not null in the DTO
 
             if (userDto.UserName != null)
             {
-                var usernameExists = _userRepository.FindUserByUserName(userDto.UserName);
+                var usernameExists = FindUserByUserName(userDto.UserName.ToUpper());
+
                 if (usernameExists != null && usernameExists.Id != userDto.Id)
                 {
                     return new ServiceResult<UserDto, UserServiceResult>
@@ -104,17 +122,55 @@
             }
 
             if (userDto.Gender != null)
+            {
                 existingUser.Gender = user.Gender;
+            }
 
             #endregion
 
-            _userRepository.SaveOrUpdateUser(existingUser);
+            SaveOrUpdateUser(existingUser);
 
             return new ServiceResult<UserDto, UserServiceResult>
             {
                 Result = new UserServiceResult { Enum = UserServiceResultEnum.Success },
                 Dto = _mapperEngine.Map<User, UserDto>(existingUser)
             };
+        }
+
+        public void SaveOrUpdateUser(User user)
+        {
+            if (user.Id != 0)
+            {
+                var existingUser = FindUserById(user.Id);
+
+                if (existingUser == null)
+                {
+                    return;
+                }
+
+                //Update scalar values
+                if (user.AccessToken != null)
+                {
+                    existingUser.AccessToken = user.AccessToken;
+                }
+
+                if (user.UserName != null)
+                {
+                    existingUser.UserName = user.UserName;
+                }
+
+                if (user.Gender != null)
+                {
+                    existingUser.Gender = user.Gender;
+                }
+
+                _dbContext.SaveChanges();
+            }
+            else
+            {
+                _dbContext.Entity<User>().Add(user);
+                _dbContext.SaveChanges();
+            }
         }
 
         /// <summary>
@@ -124,10 +180,16 @@
         /// <returns></returns>
         public bool DeleteUser(int id)
         {
-            var user = _userRepository.FindUserById(id);
-            if (user == null) return false;
+            var user = FindUserById(id);
 
-            _userRepository.DeleteUser(user.Id);
+            if (user == null)
+            {
+                return false;
+            }
+
+            _dbContext.Entity<User>().Remove(user);
+            _dbContext.SaveChanges();
+
             return true;
         }
 
@@ -138,7 +200,8 @@
         /// <returns></returns>
         public UserDto GetUserByUsername(string username)
         {
-            var user = _userRepository.FindUserByUserName(username);
+            var user = FindUserByUserName(username);
+
             return user != null ? _mapperEngine.Map<User, UserDto>(user) : null;
         }
 
@@ -152,12 +215,13 @@
         /// <returns>Update user object</returns>
         public UserDto LogoutUser(int userId)
         {
-            var user = _userRepository.FindUserById(userId);
-            user.AccessToken = String.Empty;
-            _userRepository.SaveOrUpdateUser(user);
+            var user = FindUserById(userId);
+
+            user.AccessToken = string.Empty;
+
+            SaveOrUpdateUser(user);
 
             return _mapperEngine.Map<User, UserDto>(user);
         }
-
     }
 }

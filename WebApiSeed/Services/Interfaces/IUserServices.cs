@@ -6,17 +6,26 @@
     using Dtos;
     using Common;
     using Common.User;
+    using Data.Domain;
 
     /// <summary>
     ///     User services interface
     /// </summary>
     public interface IUserServices
     {
+        User FindUserById(int id);
+
+        User FindUserByUserName(string userName);
+
+        IList<User> GetAllUsers();
+
         /// <summary>
         ///     Retrieve all database users
         /// </summary>
         /// <returns>List of User Dtos</returns>
-        IEnumerable<UserDto> GetAllUsers();
+        IEnumerable<UserDto> GetAllUsersDto();
+
+        void SaveOrUpdateUser(User user);
 
         /// <summary>
         ///     Retrieve a user based on its ID

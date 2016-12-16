@@ -7,12 +7,13 @@
     using System.Security.Claims;
     using AutoMapper;
     using Data.Domain;
-    using Data.Repositories.Interfaces;
     using Dtos;
     using Interfaces;
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.OAuth;
     using System.Configuration;
+    using Services.Interfaces;
+    using Data.Configuration.EF.Interfaces;
 
     /// <summary>
     ///     Security functions
@@ -22,14 +23,14 @@
         private readonly int MinRandomNumber = Convert.ToInt32(ConfigurationManager.AppSettings["SecurityTokenMinRandomNumber"]);
         private readonly int MaxRandomNumber = Convert.ToInt32(ConfigurationManager.AppSettings["SecurityTokenMaxRandomNumber"]);
         private readonly IMapper _mappingEngine;
-        private readonly IUserRepository _userRepository;
+        private readonly IDbContext _userRepository;
 
         /// <summary>
         ///     Security helper
         /// </summary>
         /// <param name="mappingEngine">Automapper engine</param>
         /// <param name="userRepository">User repository</param>
-        public SecurityHelper(IMapper mappingEngine, IUserRepository userRepository)
+        public SecurityHelper(IMapper mappingEngine, IDbContext userRepository)
         {
             _mappingEngine = mappingEngine;
             _userRepository = userRepository;
@@ -101,7 +102,7 @@
         public bool ValidateToken(string token)
         {
             var userId = GetUserIdForToken(token);
-            var user = _userRepository.FindUserById(userId);
+            var user = _userRepository.Entity<User>().FirstOrDefault(u => u.Id == userId);
 
             return user.AccessToken == token;
         }

@@ -30,7 +30,7 @@
             UserRepositoryMock.Setup(repository => repository.FindUserById(It.IsAny<int>())).Returns(() => user);
             UserRepositoryMock.Setup(repository => repository.DeleteUser(It.IsAny<int>()));
 
-            var userServices = new UserServices(UserRepositoryMock.Object, null, null);
+            var userServices = new UserServices(DbContextMock.Object, null, null);
 
             var result = userServices.DeleteUser(It.IsAny<int>());
 
@@ -46,7 +46,7 @@
             UserRepositoryMock.Setup(repository => repository.FindUserById(It.IsAny<int>())).Returns(() => null);
             UserRepositoryMock.Setup(repository => repository.DeleteUser(It.IsAny<int>()));
 
-            var userServices = new UserServices(UserRepositoryMock.Object, null, null);
+            var userServices = new UserServices(DbContextMock.Object, null, null);
 
             var result = userServices.DeleteUser(It.IsAny<int>());
 
@@ -68,7 +68,7 @@
             };
             UserRepositoryMock.Setup(repository => repository.GetAllUsers()).Returns(() => list);
 
-            var userServices = new UserServices(UserRepositoryMock.Object, MappingEngine, null);
+            var userServices = new UserServices(DbContextMock.Object, MappingEngine, null);
 
             var result = userServices.GetAllUsers();
 
@@ -84,7 +84,7 @@
                 Id = 1
             };
             UserRepositoryMock.Setup(repository => repository.FindUserById(It.IsAny<int>())).Returns(() => user);
-            var userServices = new UserServices(UserRepositoryMock.Object, MappingEngine, null);
+            var userServices = new UserServices(DbContextMock.Object, MappingEngine, null);
             var result = userServices.GetUserById(It.IsAny<int>());
             Assert.IsNotNull(result);
             Assert.AreEqual(user.Id, result.Id);
@@ -99,7 +99,7 @@
                 Id = 1
             };
             UserRepositoryMock.Setup(repository => repository.FindUserById(It.IsAny<int>())).Returns(() => null);
-            var userServices = new UserServices(UserRepositoryMock.Object, MappingEngine, null);
+            var userServices = new UserServices(DbContextMock.Object, MappingEngine, null);
             var result = userServices.GetUserById(It.IsAny<int>());
             Assert.IsNull(result);
         }
@@ -113,7 +113,7 @@
                 Id = 1
             };
             UserRepositoryMock.Setup(repository => repository.FindUserByUserName(It.IsAny<string>())).Returns(() => user);
-            var userServices = new UserServices(UserRepositoryMock.Object, MappingEngine, null);
+            var userServices = new UserServices(DbContextMock.Object, MappingEngine, null);
             var result = userServices.GetUserByUsername(It.IsAny<string>());
             Assert.IsNotNull(result);
             Assert.AreEqual(user.Id, result.Id);
@@ -128,7 +128,7 @@
                 Id = 1
             };
             UserRepositoryMock.Setup(repository => repository.FindUserByUserName(It.IsAny<string>())).Returns(() => null);
-            var userServices = new UserServices(UserRepositoryMock.Object, MappingEngine, null);
+            var userServices = new UserServices(DbContextMock.Object, MappingEngine, null);
             var result = userServices.GetUserByUsername(It.IsAny<string>());
             Assert.IsNull(result);
         }
@@ -144,7 +144,7 @@
             UserRepositoryMock.Setup(repository => repository.FindUserById(It.IsAny<int>())).Returns(() => user);
             UserRepositoryMock.Setup(repository => repository.SaveOrUpdateUser(It.IsAny<User>()));
 
-            var userServices = new UserServices(UserRepositoryMock.Object, MappingEngine, null);
+            var userServices = new UserServices(DbContextMock.Object, MappingEngine, null);
             var result = userServices.LogoutUser(It.IsAny<int>());
 
             Assert.IsNotNull(result);
@@ -172,7 +172,7 @@
             UserRepositoryMock.Setup(repository => repository.FindUserById(It.IsAny<int>())).Returns(() => user);
             UserRepositoryMock.Setup(repository => repository.SaveOrUpdateUser(It.IsAny<User>()));
 
-            var userServices = new UserServices(UserRepositoryMock.Object, MappingEngine, null);
+            var userServices = new UserServices(DbContextMock.Object, MappingEngine, null);
             var result = userServices.UpdateUser(userDto);
 
             Assert.IsNotNull(result);
@@ -201,7 +201,7 @@
             UserRepositoryMock.Setup(repository => repository.FindUserById(It.IsAny<int>())).Returns(() => user);
             UserRepositoryMock.Setup(repository => repository.SaveOrUpdateUser(It.IsAny<User>()));
 
-            var userServices = new UserServices(UserRepositoryMock.Object, MappingEngine, null);
+            var userServices = new UserServices(DbContextMock.Object, MappingEngine, null);
             var result = userServices.UpdateUser(userDto);
 
             Assert.IsNotNull(result);
@@ -231,7 +231,7 @@
             UserRepositoryMock.Setup(repository => repository.FindUserByUserName(It.IsAny<string>())).Returns(() => new User());
             UserRepositoryMock.Setup(repository => repository.SaveOrUpdateUser(It.IsAny<User>()));
 
-            var userServices = new UserServices(UserRepositoryMock.Object, MappingEngine, null);
+            var userServices = new UserServices(DbContextMock.Object, MappingEngine, null);
             var userServiceResult = userServices.UpdateUser(userDto);
 
             Assert.IsNotNull(userServiceResult);

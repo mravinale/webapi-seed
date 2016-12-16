@@ -6,11 +6,11 @@ namespace WebApiSeed.Infrastructure.Attributes
     using System.Net.Http;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
-    using Data.Repositories.Interfaces;
     using Dtos;
     using Helpers.Interfaces;
     using Autofac;
     using Resources;
+    using Services.Interfaces;
 
     /// <summary>
     ///     Verify token
@@ -20,11 +20,11 @@ namespace WebApiSeed.Infrastructure.Attributes
         public override void OnActionExecuting(HttpActionContext filterContext)
         {
             var container = new ContainerBuilder().Build();
-            var userRepository = container.Resolve<IUserRepository>();
+            var userServices = container.Resolve<IUserServices>();
             var securityHelper = container.Resolve<ISecurityHelper>();
             var token = filterContext.Request.Headers.Authorization.Parameter;
             var userId = securityHelper.GetUserIdForToken(token);
-            var user = userRepository.FindUserById(userId);
+            var user = userServices.FindUserById(userId);
 
             if (user.AccessToken != token)
             {

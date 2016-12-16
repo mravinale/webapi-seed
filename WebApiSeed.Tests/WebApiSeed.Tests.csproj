@@ -142,8 +142,6 @@
     <Compile Include="Helpers\Mocking.cs" />
     <Compile Include="Integration Tests\BaseIntegrationTests.cs" />
     <Compile Include="Integration Tests\UserTests.cs" />
-    <Compile Include="Unit Tests\Repository Tests\BaseRepositoryUnitTests.cs" />
-    <Compile Include="Unit Tests\Repository Tests\UserRepositoryTests.cs" />
     <Compile Include="Unit Tests\Service Tests\BaseServiceUnitTests.cs" />
     <Compile Include="Unit Tests\Service Tests\UserServicesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

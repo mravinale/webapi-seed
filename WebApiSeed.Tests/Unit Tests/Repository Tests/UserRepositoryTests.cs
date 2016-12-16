@@ -1,14 +1,13 @@
 ﻿namespace WebApiSeed.Tests
 {
-    using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
     using Data.Domain;
-    using Data.Repositories;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
     using Unit_Tests.Repository_Tests;
+    using Services;
 
     [TestClass]
     public class UserRepositoryTests : BaseRepositoryUnitTests
@@ -33,8 +32,8 @@
             UserSet.Setup(set => set.ElementType).Returns(data.ElementType);
             UserSet.Setup(set => set.GetEnumerator()).Returns(data.GetEnumerator());
             ContextMock.Setup(c => c.Entity<User>()).Returns(UserSet.Object);
-            var repository = new UserRepository(ContextMock.Object, LoggingHelperMock.Object);
 
+            var repository = new UserServices(ContextMock.Object, LoggingHelperMock.Object);
             var id = 1;
             var user = repository.FindUserById(id);
 
