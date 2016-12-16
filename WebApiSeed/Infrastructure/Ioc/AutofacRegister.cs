@@ -11,6 +11,9 @@
     using Autofac.Integration.WebApi;
 
     using System.Reflection;
+    using System;
+    using System.Linq;
+    using System.Collections.Generic;
 
     /// <summary>
     ///     Windsor API installer
@@ -26,7 +29,16 @@
 
             builder.RegisterAssemblyModules(Assembly.GetExecutingAssembly());
 
-            builder.Register(c => Mapper.Instance).As<IMapper>();
+            builder.Register(c => new MapperConfiguration(cfg =>
+            {
+                foreach (var profile in c.Resolve<IEnumerable<Profile>>())
+                {
+                    cfg.AddProfile(profile);
+                }
+            })).AsSelf().SingleInstance();
+
+            //register the mapper
+            builder.Register(c => c.Resolve<MapperConfiguration>().CreateMapper(c.Resolve)).As<IMapper>().InstancePerLifetimeScope();
 
             builder.RegisterAssemblyTypes(
                 Assembly.GetExecutingAssembly())

@@ -13,6 +13,8 @@
     using Autofac;
     using Services.Interfaces;
     using Data.Configuration.EF.Interfaces;
+    using Autofac.Core;
+    using Data.Configuration.EF;
 
     /// <summary>
     /// BaseServiceUnitTests Class
@@ -23,9 +25,9 @@
         protected Mock<IUserServices> UserRepositoryMock { get; set; }
         protected Mock<IRetryExecuter> RetryExecuterMock { get; set; }
         protected Mock<ISecurityHelper> SecurityHelperMock { get; set; }
-        protected Mock<IDbContext> DbContextMock { get; set; }
 
         protected IMapper MappingEngine { get; set; }
+        protected IDbContext DbContext { get; set; }
 
         [TestInitialize]
         public virtual void TestInitialize()
@@ -34,8 +36,8 @@
             RetryExecuterMock = new Mock<IRetryExecuter>();
             UserRepositoryMock = new Mock<IUserServices>();
             SecurityHelperMock = new Mock<ISecurityHelper>();
-            DbContextMock = new Mock<IDbContext>();
             MappingEngine = _container.Resolve<IMapper>();
+            DbContext = (WebApiSeedDbContext)_container.Resolve<IDbContext>();
         }
     }
 }
